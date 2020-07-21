@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2020-07-21 09:56:47">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="Global">global</application>
+<application_name>Global</application_name>
+<application_scope>global</application_scope>
+<application_version/>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description>Add's new UI Action - Reject (With COmment)
+Allows rejection comments to be captured from lists actions</description>
+<inserted/>
+<name>UI Action Reject With Reason</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date/>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>401ab1cf2f869810a34c7f572799b6ae</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>aidan.cooper</sys_created_by>
+<sys_created_on>2020-07-21 09:56:46</sys_created_on>
+<sys_id>ab8bb1032fc69810a34c7f572799b621</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>aidan.cooper</sys_updated_by>
+<sys_updated_on>2020-07-21 09:56:46</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_page_ab8f79631b5373006f1140c6cc4bcb4b</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_ui_page"&gt;&lt;sys_ui_page action="INSERT_OR_UPDATE"&gt;&lt;category&gt;general&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[function rejectApprovalButton() {
+	var textArea = $("approval_reject_reason_text");
+	if (textArea)
+		rejectApproval(textArea.value.trim());
+}
+
+(function() {
+	$("approval_reject_reason_text").focus();
+})();]]&gt;&lt;/client_script&gt;&lt;description&gt;Present a dialog to get rejection reason&lt;/description&gt;&lt;direct&gt;false&lt;/direct&gt;&lt;endpoint/&gt;&lt;html&gt;&lt;![CDATA[&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null"&gt;
+	&lt;g:dialog_notes_ok_cancel
+		dialog_id="approval_reject_reason"
+		textarea_id="approval_reject_reason_text"
+		textarea_label="${gs.getMessage('Reason')}"
+		textarea_label_title="${gs.getMessage('A reason is required to reject this approval')}"
+		textarea_name="approval_reject_reason_text"
+		textarea_onkeyup="enableButton()"
+		textarea_onchange="enableButton()"
+		textarea_style="height:auto; width: 100%; resize: vertical;"
+		textarea_title="${gs.getMessage('Enter the reason here')}"
+		ok=""
+		ok_action="rejectApprovalButton"
+		ok_id="change_confirm_ok_btn"
+		ok_title="${gs.getMessage('Reject Approval')}"
+		ok_type="button"
+		ok_style_class="btn btn-primary disabled"
+		cancel_title="${gs.getMessage('Close the dialog')}"
+	/&gt;
+&lt;/j:jelly&gt;]]&gt;&lt;/html&gt;&lt;name&gt;approval_rejection_reason&lt;/name&gt;&lt;processing_script/&gt;&lt;sys_class_name&gt;sys_ui_page&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2019-08-22 10:27:45&lt;/sys_created_on&gt;&lt;sys_id&gt;ab8f79631b5373006f1140c6cc4bcb4b&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;approval_rejection_reason&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_page_ab8f79631b5373006f1140c6cc4bcb4b&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;aidan.cooper&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2020-07-21 09:51:40&lt;/sys_updated_on&gt;&lt;/sys_ui_page&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1406479250</payload_hash>
+<remote_update_set display_value="UI Action Reject With Reason">ab8bb1032fc69810a34c7f572799b621</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>aidan.cooper</sys_created_by>
+<sys_created_on>2020-07-21 09:56:46</sys_created_on>
+<sys_id>ab8bb1032fc69810a34c7f572799b622</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17370c933510000001</sys_recorded_at>
+<sys_updated_by>aidan.cooper</sys_updated_by>
+<sys_updated_on>2020-07-21 09:56:46</sys_updated_on>
+<table/>
+<target_name>approval_rejection_reason</target_name>
+<type>UI Page</type>
+<update_domain>global</update_domain>
+<update_guid>7c6ab1cf02869810fdc952f7d87a0442</update_guid>
+<update_guid_history>7c6ab1cf02869810fdc952f7d87a0442:1406479250,f0afb963245373008cb934e409134fa3:65282878</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_ebf87deb1b1373006f1140c6cc4bcb9f</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name/&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;true&lt;/client&gt;&lt;client_script_v2&gt;&lt;![CDATA[function onClick(g_form) {
+
+}]]&gt;&lt;/client_script_v2&gt;&lt;comments/&gt;&lt;condition&gt;current.state == 'requested'&amp;amp;&amp;amp; (gs.hasRole('approval_admin') || isApprovalMine(current))&lt;/condition&gt;&lt;form_action&gt;false&lt;/form_action&gt;&lt;form_button&gt;false&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;true&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;false&lt;/list_button&gt;&lt;list_choice&gt;true&lt;/list_choice&gt;&lt;list_context_menu&gt;true&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style/&gt;&lt;name&gt;Reject (With Comment)&lt;/name&gt;&lt;onclick&gt;loadRejectComments();&lt;/onclick&gt;&lt;order&gt;100&lt;/order&gt;&lt;script&gt;&lt;![CDATA[var rejectCommentsDialog;
+var glist;
+var checkIds;
+
+function loadRejectComments(current) {
+
+	if (g_list.getChecked() != '') {
+		checkIds = g_list.getChecked();
+	} else {
+		if (typeof rowSysId == 'undefined') {
+			checkIds = gel('sys_uniqueValue').value;	
+		} else {
+			checkIds = rowSysId;	
+		}
+	}
+
+	glist = g_list;
+	rejectCommentsDialog = new GlideModal("approval_rejection_reason", false, 648, 250);
+	rejectCommentsDialog.setTitle(new GwtMessage().getMessage("Reject Approval Request"));
+	rejectCommentsDialog.render();
+}
+
+function rejectApproval(rejectComment) {
+
+	var ga = new GlideAjax("ApprovalRejectCommentsAjax");
+	ga.addParam("sysparm_name", "setRejectReason");
+	ga.addParam("sysparm_tu_reason", rejectComment);
+	ga.addParam("sysparm_tu_approval", checkIds);
+	ga.getXMLAnswer(function() {
+		rejectCommentsDialog.destroy();
+		glist.refresh();
+	});
+}
+
+if (typeof window == 'undefined')
+	setRedirect();
+
+function setRedirect() {
+	current.update();
+	action.setRedirectURL(current);
+}
+]]&gt;&lt;/script&gt;&lt;show_insert&gt;false&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2019-08-22 10:27:53&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;ebf87deb1b1373006f1140c6cc4bcb9f&lt;/sys_id&gt;&lt;sys_mod_count&gt;25&lt;/sys_mod_count&gt;&lt;sys_name&gt;Reject (With Comment)&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_ebf87deb1b1373006f1140c6cc4bcb9f&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;aidan.cooper&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2020-07-21 09:53:02&lt;/sys_updated_on&gt;&lt;table&gt;sysapproval_approver&lt;/table&gt;&lt;ui11_compatible&gt;true&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;true&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1825680267</payload_hash>
+<remote_update_set display_value="UI Action Reject With Reason">ab8bb1032fc69810a34c7f572799b621</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>aidan.cooper</sys_created_by>
+<sys_created_on>2020-07-21 09:56:46</sys_created_on>
+<sys_id>e78bb1032fc69810a34c7f572799b622</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17370ca722a0000001</sys_recorded_at>
+<sys_updated_by>aidan.cooper</sys_updated_by>
+<sys_updated_on>2020-07-21 09:56:46</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>Reject (With Comment)</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>f0ba39cf62869810e1a4055e52b9e198</update_guid>
+<update_guid_history>f0ba39cf62869810e1a4055e52b9e198:-1825680267,33d69e2b1f9373001a8527040f9f4566:-28663368,31b6922bf693730008a972b32c92c991:-1473105419,6576962bf093730039dd7fe71f9751ea:804649176,8e26dae79893730032dc845f7f553b86:1505942826,6906dee75f937300b0c6980b6c2e320e:-949678615,e6f596e7c1937300865781c467a9c6a0:2073959063,630596a7a39373003d6cf7bec98a5bfa:-757810099,cd649e67ab937300d17347e45924e5f2:648668148,4744de672293730060570b2686768426:-561578278,13149e67df937300590db39b05f25c90:1979881193,09f39e6717937300a1cf9f4fad18a48c:-1631620344,a0d31e27e69373009bb5342eb719f842:-616695527,34931a67159373004974eeb319fd482e:1534668229,6273d26726937300fbfd58a4b96212a6:1888408054,b72312675f937300cca5407d519456f2:953852567,61c252e3a5937300742efea19666060e:-1628891242,457256233e93730076dbbafdaceb10ce:699149653,deecca6f6e537300aca1549f186cff38:1101057790,f0bcc66f125373006e0b377fa14eb823:1535122962,8f9c426f0b537300ad5564d4a23669b4:-1264608479,e95c8aa384537300aa597a8f20c69f1c:-43229643,3240c6a3c5537300d9302a017809662e:1368111640,b910ca637c537300718fafb0bc43690e:-2068106813,b3cf7d63a5537300a8ee8312c20279d8:1375965559,eaaff96332537300ca1fb52f4503a906:-377011292</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_script_include_766ff5631b5373006f1140c6cc4bcb05</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;package_private&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;global.ApprovalRejectCommentsAjax&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;true&lt;/client_callable&gt;&lt;description/&gt;&lt;name&gt;ApprovalRejectCommentsAjax&lt;/name&gt;&lt;script&gt;&lt;![CDATA[var ApprovalRejectCommentsAjax = Class.create();
+ApprovalRejectCommentsAjax.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+	setRejectReason: function() {
+		
+		var sysId = this.getParameter("sysparm_tu_approval");
+		var reason = this.getParameter("sysparm_tu_reason");
+
+		var sysIds = sysId.split(',');
+		for (var i = 0; i &lt; sysIds.length; i++) {
+			gs.log("sysids " + sysIds[i],'TU-AC');
+			var grApproval = new GlideRecord('sysapproval_approver');
+			if (grApproval.get(sysIds[i])) {
+				grApproval.state = 'rejected';
+				grApproval.comments = gs.getMessage('Rejected reason: ') + reason;
+				grApproval.update();
+				new ApprovalUserFeedback().rejected(grApproval);
+			}	
+		}
+
+		return true;
+	},
+
+	type: 'ApprovalRejectCommentsAjax'
+});]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2019-08-22 10:27:00&lt;/sys_created_on&gt;&lt;sys_id&gt;766ff5631b5373006f1140c6cc4bcb05&lt;/sys_id&gt;&lt;sys_mod_count&gt;4&lt;/sys_mod_count&gt;&lt;sys_name&gt;ApprovalRejectCommentsAjax&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_766ff5631b5373006f1140c6cc4bcb05&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;aidan.cooper&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2020-07-21 09:53:29&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-43253231</payload_hash>
+<remote_update_set display_value="UI Action Reject With Reason">ab8bb1032fc69810a34c7f572799b621</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>aidan.cooper</sys_created_by>
+<sys_created_on>2020-07-21 09:56:46</sys_created_on>
+<sys_id>ef8bb1032fc69810a34c7f572799b621</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17370cada240000001</sys_recorded_at>
+<sys_updated_by>aidan.cooper</sys_updated_by>
+<sys_updated_on>2020-07-21 09:56:46</sys_updated_on>
+<table/>
+<target_name>ApprovalRejectCommentsAjax</target_name>
+<type>Script Include</type>
+<update_domain>global</update_domain>
+<update_guid>17cab5cf058698103a7ef1e0a955e4c4</update_guid>
+<update_guid_history>17cab5cf058698103a7ef1e0a955e4c4:-43253231,e5fc4e2f1a53730041d3971888e757e3:-881816847,dd2c4e2f9a5373008858b4788237eba9:58613896,290c82a3eb537300219d33bc823a66c9:-1297292489,757ffdeb02137300e58d447764b8631e:-325812807</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>
