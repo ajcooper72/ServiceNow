@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2020-07-21 10:14:53">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="Global">global</application>
+<application_name>Global</application_name>
+<application_scope>global</application_scope>
+<application_version/>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description>Textarea character counter for use in Service portal catalog items.</description>
+<inserted/>
+<name>SP TextArea Character Count</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date/>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>1a9df5832fc69810a34c7f572799b693</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>aidan.cooper</sys_created_by>
+<sys_created_on>2020-07-21 10:14:52</sys_created_on>
+<sys_id>24bf79c32fc69810a34c7f572799b677</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>aidan.cooper</sys_updated_by>
+<sys_updated_on>2020-07-21 10:14:52</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Textarea Character Counter">323b8c9e37bd330084f0097973990ecb</application>
+<category>customer</category>
+<comments/>
+<name>sys_properties_d1cb001237fd330084f0097973990ea1</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties"><sys_properties action="INSERT_OR_UPDATE"><choices/><description>Default maximum characters for text area field</description><ignore_cache>false</ignore_cache><is_private>false</is_private><name>default.multitext.limit</name><read_roles/><suffix/><sys_class_name>sys_properties</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2019-06-04 15:15:21</sys_created_on><sys_id>d1cb001237fd330084f0097973990ea1</sys_id><sys_mod_count>3</sys_mod_count><sys_name>default.multitext.limit</sys_name><sys_package display_value="Textarea Character Counter" source="323b8c9e37bd330084f0097973990ecb">323b8c9e37bd330084f0097973990ecb</sys_package><sys_policy/><sys_scope display_value="Textarea Character Counter">323b8c9e37bd330084f0097973990ecb</sys_scope><sys_update_name>sys_properties_d1cb001237fd330084f0097973990ea1</sys_update_name><sys_updated_by>aidan.cooper</sys_updated_by><sys_updated_on>2020-07-21 10:07:13</sys_updated_on><type>integer</type><value>1000</value><write_roles/></sys_properties><sys_translated_text action="delete_multiple" query="documentkey=d1cb001237fd330084f0097973990ea1"/></record_update>]]></payload>
+<payload_hash>-1603391935</payload_hash>
+<remote_update_set display_value="SP TextArea Character Count">24bf79c32fc69810a34c7f572799b677</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>aidan.cooper</sys_created_by>
+<sys_created_on>2020-07-21 10:14:52</sys_created_on>
+<sys_id>20bf79c32fc69810a34c7f572799b678</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17370d776b20000001</sys_recorded_at>
+<sys_updated_by>aidan.cooper</sys_updated_by>
+<sys_updated_on>2020-07-21 10:14:52</sys_updated_on>
+<table/>
+<target_name>default.multitext.limit</target_name>
+<type>System Property</type>
+<update_domain>global</update_domain>
+<update_guid>41fdf18307c698109179e758c8d5f744</update_guid>
+<update_guid_history>41fdf18307c698109179e758c8d5f744:-1603391935,db92dc166cfd33006866c3336dde6e5d:1561663435,5f821c1652fd33004c012b0a7094af77:-1036641147,7bdb401205fd3300ee56f702d39afebd:1561663435</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Textarea Character Counter">323b8c9e37bd330084f0097973990ecb</application>
+<category>customer</category>
+<comments/>
+<name>sp_widget_ef7246a037b1330084f0097973990e9d</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[function($rootScope, $scope, $timeout) {
+	var c = this;
+
+	$timeout(function() {
+		if ($scope.options['max-chars']) {
+			c.data.limit = $scope.options['max-chars'];
+		}
+
+		var text_area_id = "textarea#sp_formfield_" + $scope.options['field-name'];
+		var char_element_id = "chars-remain-" + $scope.options['field-name'];
+
+		$scope.$watch(function () {
+			return $(text_area_id).val();
+		}, function () {
+			var input = $(text_area_id).val();
+			var remaining = c.data.limit - input.length;
+			if (remaining &lt;= 0) {
+				// we've exceeded the max so truncate
+				$(text_area_id).val(input.substring(0, c.data.limit));
+				remaining = 0;
+			}
+			$('#' + char_element_id).remove();
+			var msg = c.data.prompt.replace("{0}", remaining);
+			$(text_area_id).after('&lt;p class="char-count-text" id="' + char_element_id + '"&gt;' + msg + '&lt;/p&gt;');
+
+		});
+
+	}, 0);
+}]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css/&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description&gt;Character count/Characters left for service portal&lt;/description&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;textarea-char-count&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;TextArea Character Count&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+	
+	// set default character limit, define the property to specify a different default
+	data.limit = gs.getProperty('default.multitext.limit') || 1000;
+	
+	// get the prompt for character count
+	data.prompt = gs.getMessage("Characters left: {0}");
+	
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2019-05-30 13:25:21&lt;/sys_created_on&gt;&lt;sys_id&gt;ef7246a037b1330084f0097973990e9d&lt;/sys_id&gt;&lt;sys_mod_count&gt;30&lt;/sys_mod_count&gt;&lt;sys_name&gt;TextArea Character Count&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Textarea Character Counter"&gt;323b8c9e37bd330084f0097973990ecb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_ef7246a037b1330084f0097973990e9d&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;aidan.cooper&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2020-07-21 10:07:32&lt;/sys_updated_on&gt;&lt;template/&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+<payload_hash>863411059</payload_hash>
+<remote_update_set display_value="SP TextArea Character Count">24bf79c32fc69810a34c7f572799b677</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>aidan.cooper</sys_created_by>
+<sys_created_on>2020-07-21 10:14:52</sys_created_on>
+<sys_id>68bf79c32fc69810a34c7f572799b677</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17370d7b94c0000001</sys_recorded_at>
+<sys_updated_by>aidan.cooper</sys_updated_by>
+<sys_updated_on>2020-07-21 10:14:52</sys_updated_on>
+<table/>
+<target_name>TextArea Character Count</target_name>
+<type>Widget</type>
+<update_domain>global</update_domain>
+<update_guid>5d0e7d8334c698103bd41436ef4c808a</update_guid>
+<update_guid_history>5d0e7d8334c698103bd41436ef4c808a:863411059,5252981693fd330013abf532d41b4a38:-1692350642,fc12d416defd330031b4b149ae654098:-1053564735,e551dcd2c7fd3300a08d92e51b3d38f8:740217285,921118d2ddfd330076fb049a6a4ff436:1163942659,7d01d0d253fd33002c1cc545ecace629:121386551,95e0d8d2cffd3300ca5baeb418d6082a:-936830409,a89010d235fd33006385d258a3a50171:327303162,735054d27bfd3300bf598e57e48a5dae:1950313892,b130dc92fafd3300c0027028c9f2d802:-92914798,1620dc9268fd3300ddc14c6c2dcbb5bb:126176402,140010d25dfd3300e915b745633e806b:1578739823,7fef00d231fd3300ba570ee6bd11ab62:5263919,afdfc8926cfd33006b1388887f610362:1684369402,27cf8c927efd330054616ad3c7f1ccf9:187798354,96bf4c92befd330036e263788cc6c7a7:1376242824,2d7f085226fd3300132ce880070c79ed:-1395961968,ca5f4892d6fd3300fd324e74288c5bb9:-2052043404,072f4092c7fd3300addc3324442fb316:671952501,33ce0092affd33005cc939e637f79de6:-1653695553,993d0452c9fd330049a9e55d2a6afe3e:1356433996,309b0cdeffbd3300f9f2c2c8035b3713:-289831849,487b005611bd330050eb8dab2c038271:1609417079,67e25a2c57b13300d08ea2d74f8ab061:-1307476516,5017866461b133006c71c5f4f89aaf88:1196906089,e1d68664f1b13300c5cedb53e27f650a:927184286,dea646e0e6b133003a032628a07d1068:694971059,224506e017b13300d2f5b12e769e2e64:-1472023055,49f402e006b13300bc57f2ec9ed30257:1216152122,caa306e0c3b133006ebe047e34a05082:-64338954,d3b286a045b13300aa32a9e616426534:1198468401</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>
