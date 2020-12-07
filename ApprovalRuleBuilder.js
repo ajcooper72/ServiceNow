@@ -81,7 +81,7 @@ ApprovalRuleBuilder.prototype = {
 		value = value | 0;
 
 		if (!this._isValidRule(rule)) {
-			NiceError.raise('Unknown rule (' + ruleset + ')');
+			NiceError.raise('Unknown rule (' + rule + ')');
 		}
 
 		if (!this._ruleset_added) {
@@ -102,6 +102,7 @@ ApprovalRuleBuilder.prototype = {
 
 		this._rule_added = true;
 		this._users_added = false;
+		this._manual_users = false;
 		return this;
 	},
 
@@ -197,6 +198,7 @@ ApprovalRuleBuilder.prototype = {
 	addOrRule: function(rule, value) {
 		if(this._rule_added && this._users_added) {
 			this._approval_rules += '|';
+			if (this._debug) gs.info('-- [Or]');
 			return this.addRule(rule, value);
 		} else {
 			NiceError.raise('Cannot add Or rule as previous rule not complete');
@@ -220,6 +222,7 @@ ApprovalRuleBuilder.prototype = {
 	addAndRule: function(rule, value) {
 		if(this._rule_added && this._users_added) {
 			this._approval_rules += '&';
+			if (this._debug) gs.info('-- [And]');
 			return this.addRule(rule, value);
 		} else {
 			NiceError.raise('Cannot add And rule as previous rule not complete');
