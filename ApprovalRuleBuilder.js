@@ -30,6 +30,9 @@ ApprovalRuleBuilder.prototype = {
 		this._rule_added = false;  // rule can only be added to an open ruleset, Or/And rules can be added once users/groups have been set for current rule
 		this._users_added = false;  // users/groups can only be added to an open rule but not if manual users has been set
 		this._manual_users = false;  // manual users cannot be added to a rule if users/groups already applied
+
+		this._users = [];  // temporary store for users, allows multiple .addUsers calls
+		this._groups = [];  // temporary store for groups, allows multiple .addGroups calls
 	},
 
 	/**
@@ -49,6 +52,8 @@ ApprovalRuleBuilder.prototype = {
 		if (this._approval_rules != '' && !this._users_added) {
 			NiceError.raise('Cannot add ruleset (' + ruleset + ') as previous set not complete');
 		}
+
+		this._commitUsersAndGroups();
 
 		if (this._approval_rules != '') {
 			if (this._debug) gs.info('- [RuleSet] Or' + ruleset);
@@ -88,6 +93,10 @@ ApprovalRuleBuilder.prototype = {
 			NiceError.raise('Cannot add rule (' + rule + ') as no ruleset defined.');
 		}
 
+		if (this._rule_added) {
+			NiceError.raise('Cannot add rule (' + rule + '), use addAndRule or addOrRule instead');
+		}
+
 		if (rule == ApprovalRuleBuilder.RULE_PERCENT || rule == ApprovalRuleBuilder.RULE_NUMBER) {
 			if (value > 0) {
 				this._approval_rules += value;
@@ -119,9 +128,10 @@ ApprovalRuleBuilder.prototype = {
 	addUsers: function(user_sys_id_list) {
 		if (this._rule_added) {
 			if (!this._manual_users) {
-				if (this._debug) gs.info('--- [Users] ' + user_sys_id_list.join(','));
-				this._approval_rules += 'U[' + user_sys_id_list.join(',') + ']';
-				this._users_added = true;
+				if (this._debug) gs.info('--- [Users] (temporary) ' + user_sys_id_list.join(','));
+				var au = new ArrayUtil();
+				this._users = au.union(this._users, user_sys_id_list);
+				this._users_added = this._users_added || this._users.length > 0;
 			} else {
 				NiceError.raise('Cannot add groups as manual users have already been added.');
 			}
@@ -144,9 +154,10 @@ ApprovalRuleBuilder.prototype = {
 	addGroups: function(group_sys_id_list) {
 		if (this._rule_added) {
 			if (!this._manual_users) {
-				if (this._debug) gs.info('--- [Groups] ' + group_sys_id_list.join(','));
-				this._approval_rules += 'G[' + group_sys_id_list.join(',') + ']';
-				this._users_added = true;
+				if (this._debug) gs.info('--- [Groups] (temporary)' + group_sys_id_list.join(','));
+				var au = new ArrayUtil();
+				this._groups = au.union(this._groups, group_sys_id_list);
+				this._users_added = this._users_added || this._groups.length > 0;
 
 			} else {
 				NiceError.raise('Cannot add groups as manual users have already been added.');
@@ -197,6 +208,8 @@ ApprovalRuleBuilder.prototype = {
 	 */	
 	addOrRule: function(rule, value) {
 		if(this._rule_added && this._users_added) {
+			this._commitUsersAndGroups();
+			this._rule_added = false;
 			this._approval_rules += '|';
 			if (this._debug) gs.info('-- [Or]');
 			return this.addRule(rule, value);
@@ -221,6 +234,8 @@ ApprovalRuleBuilder.prototype = {
 	 */		
 	addAndRule: function(rule, value) {
 		if(this._rule_added && this._users_added) {
+			this._commitUsersAndGroups();
+			this._rule_added = false;
 			this._approval_rules += '&';
 			if (this._debug) gs.info('-- [And]');
 			return this.addRule(rule, value);
@@ -238,8 +253,13 @@ ApprovalRuleBuilder.prototype = {
 	 * @returns {string} encoded rule string for use in Flow Designer
      */
 	getApprovalRules: function() {
+		this._commitUsersAndGroups();
 		return this._approval_rules;
 	},
+
+	/*
+	 * Internal methods
+	 */
 
 	_isValidRuleSet: function(ruleset) {
 		return (ruleset == ApprovalRuleBuilder.RULESET_APPROVES ||
@@ -253,6 +273,20 @@ ApprovalRuleBuilder.prototype = {
 				rule == ApprovalRuleBuilder.RULE_RESPONDED ||
 				rule == ApprovalRuleBuilder.RULE_PERCENT ||
 				rule == ApprovalRuleBuilder.RULE_NUMBER);
+	},
+
+	_commitUsersAndGroups: function() {
+		if (this._users.length > 0) {
+			this._approval_rules += 'U[' + this._users.join(',') + ']';	
+			if (this._debug) gs.info('--- [Users] ' + this._users.join(','));
+			this._users = [];
+		}
+
+		if (this._groups.length > 0) {
+			if (this._debug) gs.info('--- [Groups] ' + this._groups.join(','));
+			this._approval_rules += 'G[' + this._groups.join(',') + ']';
+			this._groups = [];
+		}
 	},
 
 	type: 'ApprovalRuleBuilder'
