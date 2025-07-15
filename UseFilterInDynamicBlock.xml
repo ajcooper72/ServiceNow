@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+    <script>
+        var container = document.getElementById("filterText");
+        var defaultFilter = window.SNC.canvas.interactiveFilters.defaultValues;
+
+        // hardcoded filter references, bad I know, but what you going to do?
+        var USER_FILTER_ID = "37d152d01b18ea90ea5999b2b24bcb7e";
+        var DATE_FILTER_ID = "10e346d41b33da10fef620e7b04bcb7d";
+        var FILTER_TABLE = 'u_tu_ts_entry';
+
+        // get default filters
+        var userFilter = getFilterCondition(defaultFilter, USER_FILTER_ID, FILTER_TABLE);
+        var dateFilter = getFilterCondition(defaultFilter, DATE_FILTER_ID, FILTER_TABLE);
+
+        filtersUpdated();
+
+        function getFilterCondition(filterObj, filterId, table) {
+            //check if filter ID was passed into the filterObj
+            if (filterId in filterObj === false) return "";
+
+            var newObj = filterObj[filterId].filter(function(_x) {
+                // filter out entries matching the table
+                return _x.table == table;
+            }).map(function(_x) {
+                // assumes we're either getting an ON query or an =, doesn't allow for anything else!
+                var filter = _x.filter.split('ON').length > 1 ? _x.filter.split('ON') : _x.filter.split('=');
+
+                _x.filterValue = filter[1];
+                return _x
+            })[0];
+
+            return newObj ? newObj.filterValue : '';
+        }
+
+        // listen for a filter update filter
+        // we're only interested in the user or date filter at the moment
+        CustomEvent.observe('dashboard_filter.added', function(filterMessage) {
+            if (USER_FILTER_ID in filterMessage) {
+                userFilter = getFilterCondition(filterMessage, USER_FILTER_ID, FILTER_TABLE);
+            }
+            if (DATE_FILTER_ID in filterMessage) {
+                dateFilter = getFilterCondition(filterMessage, DATE_FILTER_ID, FILTER_TABLE);
+            }
+
+            filtersUpdated();
+        });
+
+        // listen for a filter removed event
+        // only the date filter can send one of these so just blank out the dateFilter value
+        CustomEvent.observe('dashboard_filter.removed', function() {
+            dateFilter = '';
+            filtersUpdated();
+        });
+
+        function filtersUpdated() {
+            var gaUtilisation = new GlideAjax('CCConsultantStatsAjax');
+            gaUtilisation.addParam('sysparm_name', 'getUtilisationData');
+            gaUtilisation.addParam('sysparm_cc_user_id', userFilter);
+            gaUtilisation.addParam('sysparm_cc_date_filter', dateFilter);
+
+            gaUtilisation.getXMLAnswer(function(_answer) {
+				var utilisationObj = JSON.parse(_answer);
+
+				// not proud of the following, but does the job
+				var html = '<table style="width:100%">';
+				html += '<tr>';
+				html += '<td rowspan="2" style="width:50%;text-align:center;"><span style="width:100%;font-size:6em;color:green;text-align:center;">' + utilisationObj.utilised_percent + '%</span></td>';
+
+				var daysUtilisedMsg = utilisationObj.utilised_days == 1 ? 'day' : 'days';
+				html += '<td style="width:50%;"><span style="font-size:2em;">' + utilisationObj.utilised_days + ' ' + daysUtilisedMsg + ' utilised</span></td>'
+				html += '</tr>';
+				html += '<tr>';
+
+				var daysAbsentMsg = utilisationObj.absence_days == 1 ? 'day' : 'days';
+				html += '<td style="width:50%;"><span style="font-size:2em;color:gray;">' + utilisationObj.absence_days + ' ' + daysAbsentMsg + ' absent</span></td>'
+				html += '</tr>';
+				html += '<tr>';
+				html += '<td colspan="2" style="text-align:center;"><span style="width:100%;font-size:1em;color:darkgray;text-align:center;">' + utilisationObj.working_days + " working days in selected period</span></td>";
+				html += '</tr>';
+				html += '</table>';
+				
+                container.innerHTML = html;
+            });
+        }
+    </script>
+    <div id='filterText'></div>
+
+
+</j:jelly>
